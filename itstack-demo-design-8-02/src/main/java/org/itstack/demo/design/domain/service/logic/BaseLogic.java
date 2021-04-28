@@ -1,7 +1,6 @@
 package org.itstack.demo.design.domain.service.logic;
 
 
-import org.itstack.demo.design.domain.model.vo.TreeNode;
 import org.itstack.demo.design.domain.model.vo.TreeNodeLink;
 
 import java.util.List;
@@ -22,10 +21,18 @@ public abstract class BaseLogic implements LogicFilter {
         return 0L;
     }
 
+    /**
+     * 让实现类按规则自己提供决策值
+     * @param treeId
+     * @param userId
+     * @param decisionMatter 决策物料
+     * @return
+     */
     @Override
     public abstract String matterValue(Long treeId, String userId, Map<String, String> decisionMatter);
 
     private boolean decisionLogic(String matterValue, TreeNodeLink nodeLink) {
+        // 限定类型；1:=;2:>;3:<;4:<=;5>=;6:enum[枚举范围]
         switch (nodeLink.getRuleLimitType()) {
             case 1:
                 return matterValue.equals(nodeLink.getRuleLimitValue());
